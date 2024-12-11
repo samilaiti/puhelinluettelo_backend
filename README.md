@@ -1,3 +1,3 @@
 # puhelinluettelo_backend
 
-https://puhelinluettelo-backend-kks1.onrender.com/api/persons
+https://puhelinluettelo-backend-kks1.onrender.com
