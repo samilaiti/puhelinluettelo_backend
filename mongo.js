@@ -11,8 +11,6 @@ if (process.argv.length === 4) {
   process.exit(1)
 }
 
-const password = process.argv[2]
-
 const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery', false)
@@ -35,14 +33,14 @@ if (process.argv.length === 3) {
   })
 }
 
-if (process.argv.length === 5) {
-  const person = new Person({
-    name: process.argv[3],
-    number: process.argv[4]
-  })
+// if (process.argv.length === 5) {
+//   const person = new Person({
+//     name: process.argv[3],
+//     number: process.argv[4]
+//   })
 
-  person.save().then(result => {
-    console.log('person saved')
-    mongoose.connection.close()
-  })  
-}
+// person.save().then(result => {
+//   console.log('person saved')
+//   mongoose.connection.close()
+// })
+// }

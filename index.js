@@ -10,8 +10,8 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :p
 app.use(cors())
 app.use(express.static('dist'))
 
-morgan.token('param', function(req, res, param) {
-  if (req.method === "POST") {
+morgan.token('param', function(req) {
+  if (req.method === 'POST') {
     return JSON.stringify(req.body)
   }
   return req.method
@@ -20,7 +20,7 @@ morgan.token('param', function(req, res, param) {
 app.get('/info', (request, response) => {
   Person.find({}).then(persons => {
     response.send(`<p>Phonebook has info for ${persons.length} people</p>
-      <p>${new Date().toString()}</p>`)  
+      <p>${new Date().toString()}</p>`)
   })
 })
 
@@ -39,7 +39,7 @@ app.get('/api/persons/:id', (request, response, next) => {
         response.status(404).end()
       }
     })
-    .catch(error => next(error))    
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -80,7 +80,7 @@ app.post('/api/persons', (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 
 })
 
@@ -93,9 +93,9 @@ app.put('/api/persons/:id', (request, response, next) => {
   }
 
   Person.findByIdAndUpdate(
-      request.params.id, 
-      person, 
-      { new: true, runValidators: true, context: 'query' })
+    request.params.id,
+    person,
+    { new: true, runValidators: true, context: 'query' })
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
@@ -105,9 +105,9 @@ app.put('/api/persons/:id', (request, response, next) => {
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
-  if (error.name === "CastError") {
+  if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === "ValidationError") {
+  } else if (error.name === 'ValidationError') {
     return response.status(400).send({ error: error.message })
   }
 
